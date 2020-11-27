@@ -8,7 +8,7 @@ if __name__ == '__main__':
     npy_list = os.listdir(path)
 
     # 保存路径
-    save_path = "C://Users//DELL//Desktop//smoke_detection//test_smoke_data_pic//"
+    save_path = "C://Users//DELL//Desktop//smoke_detection//test_smoke_data_label//"
     if not os.path.exists(save_path):
         os.mkdir(save_path)
 
@@ -16,13 +16,18 @@ if __name__ == '__main__':
     for i in range(0, len(npy_list)):
         npy_full_path = os.path.join(path, npy_list[i])
 
-        # 加载图片集合
-        img = np.load(npy_full_path)
+        # 加载标签集合
+        label = np.load(npy_full_path)
 
-        # 对每一个 npy 下的每一张图片进行保存
-        for i in range(0, 10617):
-            # 获得第 i 张图片
-            arr = img[i, :, :, :]
+        # txt 路径
+        out_path = save_path + "label_" + str(i) + ".txt"
 
-            # 保存图片
-            plt.imsave(os.path.join(save_path, "{}_disp.png".format(i)), arr, cmap='plasma')
+        # 创建 txt
+        f = open(out_path, 'w')
+
+        # 标签写入 txt
+        for i in label:
+            f.write(str(i[0]) + '\n')
+
+        # 关闭 txt
+        f.close()
